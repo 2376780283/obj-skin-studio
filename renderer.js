@@ -115,7 +115,14 @@ class Renderer {
         let gl = this.context;
         gl.viewport(0, 0, this.canvas.width, this.canvas.height);
         gl.clearColor(this.bgColor[0], this.bgColor[1], this.bgColor[2], this.bgColor[3]);
+
         gl.enable(gl.DEPTH_TEST);
+
+        // --- 新增：开启 Alpha 混合 ---
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+        // --------------------------
+
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         if (!this.hasModel || !this.hasTexture)
@@ -134,17 +141,22 @@ class Renderer {
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
         gl.uniform1i(this.samplerLocation, 0);
+
+        // 确保这里的 uColor 也会传递 Alpha 通道
         gl.uniform4f(this.colorLocation, 1.0, 1.0, 1.0, 1.0);
 
         gl.drawArrays(gl.TRIANGLES, 0, this.vertexCount);
 
+        // 绘制高亮部分
         if (this.highlightedVertexStart !== this.highlightedVertexEnd) {
-            gl.clearColor(1, 1, 1, 1);
-            gl.clear(gl.DEPTH_BUFFER_BIT);
+            // 高亮时通常不需要深度遮挡，否则会和原模型重叠导致闪烁（Z-fighting）
+            gl.disable(gl.DEPTH_TEST);
             gl.uniform4f(this.colorLocation, 0.5, 0.5, 1.0, 0.75);
             gl.drawArrays(gl.TRIANGLES, (this.highlightedVertexStart) * 3, (this.highlightedVertexEnd - this.highlightedVertexStart) * 3);
+            gl.enable(gl.DEPTH_TEST);
         }
     }
+
 
     sceneToScreen(point) {
         let ret = vec4.create();

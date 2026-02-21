@@ -1,43 +1,54 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Skin Studio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Studio Pro</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<ul id="skins">
-    <li id="addSkin"><span>+</span></li>
-    <li id="export" class="button">Export</li>
-</ul>
-<div id="main">
-    <canvas id="primaryCanvas"></canvas>
-    <div id="panel">
-        <h3 class="panelTitle">Options</h3>
-        <ul id="inspector">
-            <li id="inspectDefaultActions">
-                <a href="#" class="button" id="uploadModel">Upload model</a>
-                <a href="#" class="button" id="uploadTexture">Upload texture</a>
-                <a href="#" class="button" id="deleteSkin">Delete</a>
-            </li>
-        </ul>
-        <h3 class="panelTitle">Geometry Hierarchy</h3>
-        <ul id="groupTree"></ul>
+    <ul id="skins">
+        <li id="addSkin" title="Add New Skin"><span>+</span></li>
+        <li id="export" class="button">EXPORT PACK</li>
+    </ul>
+
+    <div id="main">
+        <canvas id="primaryCanvas"></canvas>
+        
+        <aside id="panel">
+            <h3 class="panelTitle">Inspector</h3>
+            <ul id="inspector">
+                <li id="inspectDefaultActions">
+                    <button class="button" id="uploadModel">Model</button>
+                    <button class="button" id="uploadTexture">Texture</button>
+                    <button class="button" id="deleteSkin">Delete Current</button>
+                </li>
+            </ul>
+
+            <h3 class="panelTitle">Hierarchy</h3>
+            <ul id="groupTree"></ul>
+        </aside>
     </div>
-</div>
-<div id="point3DMover">
-    <div class="moveHandle" id="point3DMoverX"><div class="arrow"></div></div>
-    <div class="moveHandle" id="point3DMoverY"><div class="arrow"></div></div>
-    <div class="moveHandle" id="point3DMoverZ"><div class="arrow"></div></div>
-    <div class="circle"></div>
-</div>
-<script src="gl-matrix-min.js"></script>
-<script src="zip.js"></script>
-<script src="data.js"></script>
-<script src="obj_parser.js"></script>
-<script src="renderer.js"></script>
-<script src="ui.js"></script>
-<script>
-    let uiManager = new UiManager();
-</script>
+
+    <div id="point3DMover">
+        <div class="moveHandle" id="point3DMoverX"><div class="arrow"></div></div>
+        <div class="moveHandle" id="point3DMoverY"><div class="arrow"></div></div>
+        <div class="moveHandle" id="point3DMoverZ"><div class="arrow"></div></div>
+        <div class="circle"></div>
+    </div>
+
+    <script src="gl-matrix-min.js"></script>
+    <script src="zip.js"></script>
+    <script src="data.js"></script>
+    <script src="obj_parser.js"></script>
+    <script src="renderer.js"></script>
+    <script src="ui.js"></script>
+    <script>
+        // 初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            let uiManager = new UiManager();
+        });
+    </script>
 </body>
 </html>
